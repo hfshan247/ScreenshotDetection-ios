@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ScreenshotCaptureDelegate{
-    func didTakeScreenshot()
+    func didTakeScreenshot(captureCount: Int)
 }
 
 let sharedPeripheralManager = ScreenshotManager.shared()
@@ -32,7 +32,8 @@ class ScreenshotManager: NSObject {
         
         let mainQueue = OperationQueue.main
         NotificationCenter.default.addObserver(forName: UIApplication.userDidTakeScreenshotNotification, object: nil, queue: mainQueue) { notification in
-             print("Captured")
+            self.captureCount += 1
+            print("Captured \(self.captureCount)")
             self.capture()
         }
     }
@@ -43,8 +44,7 @@ class ScreenshotManager: NSObject {
     
     func capture(){
         // Here is the logic where we detect the capture !
-        delegate?.didTakeScreenshot()
-        
+        delegate?.didTakeScreenshot(captureCount:self.captureCount)
     }
 }
 
