@@ -13,8 +13,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        sharedPeripheralManager.delegate = self
     }
-
-
+    
 }
 
+extension ViewController: ScreenshotCaptureDelegate{
+    func didTakeScreenshot() {
+        let alert = UIAlertController(title: "Alert", message: "Screenshot was captured", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+}
